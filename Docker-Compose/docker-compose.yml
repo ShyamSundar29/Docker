@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    build: .  # Build the Dockerfile in the current directory
+    image: my-flask-app:1.0  # Name and tag the Docker image
+    ports:
+      - "8000:5000"  # Map port 8000 on your machine to port 5000 in the container
+    depends_on:
+      - redis  # Ensure Redis starts before the Flask app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+
+  redis:
+    image: redis:alpine  # Use the official Redis image
+    ports:
+      - "6379:6379"  # Map port 6379 on your machine to port 6379 in the container
